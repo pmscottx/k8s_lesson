@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: updater-cm
+data:
+  INTERVAL: '10'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: updater
+spec:
+  containers:
+    - name: web-server
+      image: nginx:1.21.3-alpine
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: storage
+          mountPath: /usr/share/nginx/html
+    - name: updater-app
+      image: landrzejewski/updater:v2
+      volumeMounts:
+        - name: storage
+          mountPath: /var/htdocs
+        - name: config
+          mountPath: /var/conf
+      #args:
+      #  - '30'
+
+      #env:
+      #  - name: INTERVAL
+      #    value: '5'
+      
+      #env:
+      #  - name: INTERVAL
+      #    valueFrom:
+      #      configMapRef:
+      #        name: updater-cm
+      #        key: INTERVAL
+       
+      envFrom:
+        - configMapRef:
+            name: updater-cm       
+      
+  volumes:
+    - name: storage
+      persistentVolumeClaim:
+        claimName: claim-one
+      #hostPath:
+      #  path: /tmp/updater
+      #emptyDir:
+      #  medium: Memory
+    - name: config
+      configMap:
+        name: updater-cm
+
+
+

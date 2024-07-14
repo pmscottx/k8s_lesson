@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gfs
+spec:
+  containers:
+    - name: ngix-gfs
+      image: nginx:1.21.3-alpine
+      volumeMounts:
+        - mountPath: /var/htdocs
+          name: gluster-gs-volume
+  volumes:
+    - name: gluster-gs-volume
+      glusterfs:
+        endpoints: glusterfs-cluster
+        path: volume1
+        readOnly: false

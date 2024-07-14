@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: volume-one
+  labels:
+    type: primary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/volume-one
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: volume-two
+  labels:
+    type: primary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/volume-two
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: volume-three
+  labels:
+    type: secondary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/volume-three
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-one
+spec:
+  selector:
+    matchLabels:
+      type: primary
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
