@@ -19,5 +19,3 @@ spec:
         periodSeconds: 2
         timeoutSeconds: 2
         failureThreshold: 3
-  imagePullSecrets:
-    - name: myregistrysecret
