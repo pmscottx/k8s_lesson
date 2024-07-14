@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: echo-server
-      image: landrzejewski/echo-server:v1
+      image: pmscotts/echo-server:v1
       ports:
         - containerPort: 8080
       livenessProbe:
